@@ -1,5 +1,7 @@
 # Echo notes app
 
+## using BLOC
+
 This project aims to develop a Flutter application that is Organizational notes app. This notes app will be based on an organization in which workers of the organization will create an account in this application and store organizational information on their notes. This app will have features like:
 
 - Authentication and authorization
