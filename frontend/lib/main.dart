@@ -63,7 +63,7 @@ class MyAppState extends State<MyApp> {
           ),
         ),
         darkTheme: ThemeData.dark(),
-        initialRoute: '/admin',
+        initialRoute: '/notes',
         routes: {
           '/home': (context) => const HomePage(),
           '/admin': (context) => const AdminPage(),
