@@ -19,3 +19,24 @@ class AddActivityEvent extends ActivityLogEvent {
 }
 
 class LoadActivitiesEvent extends ActivityLogEvent {}
+
+class DeleteActivityEvent extends ActivityLogEvent {
+  final int activityId;
+
+  const DeleteActivityEvent({required this.activityId});
+
+  @override
+  List<Object> get props => [activityId];
+}
+
+class UpdateActivityEvent extends ActivityLogEvent {
+  final int activityId;
+  final String user;
+  final String activity;
+  final DateTime dateTime;
+
+  const UpdateActivityEvent({required this.activityId, required this.user, required this.activity, required this.dateTime});
+
+  @override
+  List<Object> get props => [activityId, user, activity, dateTime];
+}

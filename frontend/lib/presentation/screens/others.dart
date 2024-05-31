@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 class _Note {
   final String title;
   final String content;
@@ -54,7 +55,7 @@ class _ViewNotesPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // Navigate to NotesPage
-                Navigator.pop(context);
+                context.pop();
               },
               icon: const Icon(Icons.notes),
             ),
@@ -149,7 +150,7 @@ class OthersNoteDetailsDialog extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                     child: const Text('Back'),
                   ),

@@ -7,7 +7,10 @@ sealed class NotesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class GiveMeData extends NotesEvent {}
+final class GiveMeData extends NotesEvent {
+  // Think we have to use the services...
+  
+}
 
 final class AddNotes extends NotesEvent {
   final String title;

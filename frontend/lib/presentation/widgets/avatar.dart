@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CircleAvatarWidget extends StatelessWidget {
   final String routeName;
@@ -10,8 +11,18 @@ class CircleAvatarWidget extends StatelessWidget {
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) {
         return [
+          PopupMenuItem<String>(
+            value: 'Current Email',
+            child: Text(
+              'a@a.com',
+              style: TextStyle(
+                color: Colors.grey[600],
+              ),
+            ),
+          ),
+          const PopupMenuDivider(),
           const PopupMenuItem<String>(
-            value: 'update Profile',
+            value: 'Update Profile',
             child: Text('Update Profile'),
           ),
           const PopupMenuItem<String>(
@@ -25,12 +36,12 @@ class CircleAvatarWidget extends StatelessWidget {
         ];
       },
       onSelected: (String value) {
-        if (value == 'update Profile') {
-          Navigator.pushNamed(context, '/updateProfile');
+        if (value == 'Update Profile') {
+          context.go('/updateProfile');
         } else if (value == 'delete Account') {
           // Handle delete account logic here
         } else if (value == 'logout') {
-          Navigator.pushNamed(context, routeName);
+          context.go(routeName);
         }
       },
       child: const CircleAvatar(
@@ -39,58 +50,3 @@ class CircleAvatarWidget extends StatelessWidget {
     );
   }
 }
-
-/*import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:digital_notebook/bloc/profile_bloc.dart';
-import 'package:digital_notebook/bloc/profile_state.dart';
-
-class CircleAvatarWidget extends StatelessWidget {
-  final String routeName;
-
-  const CircleAvatarWidget({Key? key, required this.routeName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        return Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/avatar.png'),
-            ),
-            const SizedBox(width: 8), // Add spacing between avatar and text
-            PopupMenuButton<String>(
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem<String>(
-                    value: 'update Profile',
-                    child: Text('Update Profile'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'delete Account',
-                    child: Text('Delete Account'),
-                  ),
-                  const PopupMenuItem<String>(
-                    value: 'logout',
-                    child: Text('Logout'),
-                  ),
-                ];
-              },
-              onSelected: (String value) {
-                if (value == 'update Profile') {
-                  Navigator.pushNamed(context, '/updateProfile');
-                } else if (value == 'delete Account') {
-                  // Handle delete account logic here
-                } else if (value == 'logout') {
-                  Navigator.pushNamed(context, routeName);
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
- */

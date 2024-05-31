@@ -1,3 +1,4 @@
+import 'package:digital_notebook/models/activity_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ActivityLogState extends Equatable {
@@ -7,6 +8,7 @@ class ActivityLogState extends Equatable {
   List<Object> get props => [];
 }
 
+class ActivitiesLogInitial extends ActivityLogState {}
 class ActivitiesLoading extends ActivityLogState {}
 
 class ActivitiesLoaded extends ActivityLogState {
@@ -27,10 +29,3 @@ class ActivitiesLoadFailed extends ActivityLogState {
   List<Object> get props => [error];
 }
 
-class Activity {
-  final String user;
-  final String activity;
-  final DateTime dateTime;
-
-  Activity({required this.user, required this.activity, required this.dateTime});
-}

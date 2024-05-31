@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:digital_notebook/models/note_model.dart';
 import 'package:digital_notebook/presentation/widgets/note_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/avatar.dart';
 import './others.dart';
 
@@ -34,9 +35,10 @@ class NotepageState extends State<Notepage>
     final bloc = context.watch<NotesBloc>();
     final state = bloc.state;
     if (state is NotesInitial) {
-      bloc.add(GiveMeData());
+      bloc.add(GiveMeData()); //here i think
       return const NotesLoadingWidget();
     } else if (state is NotesLoading) {
+      bloc.add(GiveMeData());
       return const NotesLoadingWidget();
     } else if (state is NotesLoaded) {
       return Scaffold(
@@ -74,8 +76,6 @@ class NotepageState extends State<Notepage>
                 return NotesCard(
                   note: state.notes[index],
                   index: index,
-                  onNoteDeleted: onNoteDeleted,
-                  onNoteEdited: onNoteEdited,
                   deleteNote: () {
                     bloc.add(DeleteNotes(index: index));
                   },
@@ -105,11 +105,10 @@ class NotepageState extends State<Notepage>
         floatingActionButton: _tabController.index == 0
             ? FloatingActionButton(
                 onPressed: () async {
-                  final result = await Navigator.pushNamed(context, '/addNote');
-                  debugPrint('i ahve arrivbed here111111111111111111');
+                  final result = await context.pushNamed('addNote');
+                  debugPrint('i have pressed submit on notes');
                   debugPrint('$result');
                   if (result != null && result is Map) {
-                    debugPrint('i ahve arrivbed here');
                     final title = result['noteTitle'];
                     final body = result['noteBody'];
                     debugPrint('$title, $body');
@@ -131,22 +130,6 @@ class NotepageState extends State<Notepage>
         ),
       );
     }
-  }
-
-  void onNewNoteCreated(Note note) {
-    notes.add(note);
-    setState(() {});
-  }
-
-  void onNoteDeleted(int index) {
-    notes.removeAt(index);
-    setState(() {});
-  }
-
-  void onNoteEdited(Note note) {
-    notes[note.index].title = note.title;
-    notes[note.index].body = note.body;
-    setState(() {});
   }
 }
 

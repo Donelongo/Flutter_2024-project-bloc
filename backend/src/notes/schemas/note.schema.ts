@@ -12,7 +12,7 @@ export class Note{
     @Prop({required:true})
     content:string;
 
-    @Prop({type:Types.ObjectId,ref:'User'})
+    @Prop({ref:'User', required:true})
     userId:string;
 
     //Time stamps
@@ -23,8 +23,10 @@ export class Note{
     updatedAt:Date;
 
     @Prop()
-    notesid:Types.ObjectId;
-    
+    notesid:String;
+
+    @Prop( {required: true})
+    index:number;   
 }
 export type NoteDocument = Note & Document;
 export const NoteSchema =SchemaFactory.createForClass(Note);

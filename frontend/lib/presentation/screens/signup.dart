@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/password.dart';
 import '../widgets/email.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ Widget build(BuildContext context) {
   final bloc = context.read<SignupBloc>();
   return WillPopScope(
     onWillPop: () async {
-      Navigator.pushNamed(context, '/home');
+      context.pushNamed('/home');
       return false;
     },
   child: BlocConsumer<SignupBloc, SignupState>(
@@ -31,7 +32,7 @@ Widget build(BuildContext context) {
 
         if (state is SignupSuccess) {
           // Navigate to another page here
-          Navigator.pushNamed(context, '/login');
+          context.go('/login');
         }
       },
       builder: (context, state) {
@@ -45,7 +46,12 @@ Widget build(BuildContext context) {
 
         else if (state is SignupDefault) {
               return Scaffold(
-                appBar: AppBar(),
+                appBar: AppBar(
+                  leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => GoRouter.of(context).go('/'),
+                ),
+                ),
                 body: Center(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -86,8 +92,7 @@ Widget build(BuildContext context) {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          Navigator.pushNamed(
-                                              context, '/login');
+                                          context.go('/login');
                                         },
                                     ),
                                   ],

@@ -1,6 +1,7 @@
 import 'package:digital_notebook/bloc/add_note_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 
 class AddNote extends StatelessWidget {
@@ -49,7 +50,7 @@ class AddNote extends StatelessWidget {
             ),
           ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, {
+                context.pop({
                   'noteTitle':state.titleController.text,
                   'noteBody':state.bodyController.text
                 });

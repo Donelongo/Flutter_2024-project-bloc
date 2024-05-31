@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:digital_notebook/bloc/activity_log_bloc.dart';
-import 'package:digital_notebook/bloc/activity_log_event.dart';
 
 class AddActivityDialog extends StatelessWidget {
+  const AddActivityDialog(
+      {super.key,
+      required this.userController,
+      required this.activityController,
+      required this.selectedDateTime,
+      required this.selectedDateTimeNotifier});
   final TextEditingController userController;
   final TextEditingController activityController;
-  final DateTime? selectedDateTime;
-  final Function(String, String, DateTime) onAddActivity;
-  final VoidCallback onCloseDialog;
+  final DateTime selectedDateTime;
   final ValueNotifier<DateTime?> selectedDateTimeNotifier;
 
-  AddActivityDialog({
-    super.key,
-    required this.userController,
-    required this.activityController,
-    required this.selectedDateTime,
-    required this.onAddActivity,
-    required this.onCloseDialog,
-  }) : selectedDateTimeNotifier = ValueNotifier<DateTime?>(selectedDateTime);
-
-  static Widget create(BuildContext context) {
-    return AddActivityDialog(
-      userController: TextEditingController(),
-      activityController: TextEditingController(),
-      selectedDateTime: DateTime.now(),
-      onAddActivity: (user, activity, dateTime) {
-        context.read<ActivityLogBloc>().add(AddActivityEvent(
-          user: user,
-          activity: activity,
-          dateTime: dateTime,
-        ));
-      },
-      onCloseDialog: () {
-        Navigator.of(context).pop();
-      },
-    );
-  }
+// ValueNotifier<DateTime?>(DateTime.now())
 
   Future<void> _selectDateTime(BuildContext context) async {
     final DateTime? pickedDateTime = await showDatePicker(
@@ -100,9 +76,10 @@ class AddActivityDialog extends StatelessWidget {
               builder: (context, value, child) {
                 return ElevatedButton(
                   onPressed: () => _selectDateTime(context),
-                  child: Text(value == null
-                      ? 'Select Date and Time'
-                      : 'Date and Time: ${value.toString().substring(0, 16)}',
+                  child: Text(
+                      value == null
+                          ? 'Select Date and Time'
+                          : 'Date and Time: ${value.toString().substring(0, 16)}',
                       style: const TextStyle(color: Colors.blueGrey)),
                 );
               },
@@ -114,12 +91,11 @@ class AddActivityDialog extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_validateInputs()) {
-                      onAddActivity(
-                        userController.text,
-                        activityController.text,
-                        selectedDateTimeNotifier.value ?? DateTime.now(),
-                      );
-                      onCloseDialog();
+                      Navigator.pop(context, {
+                        'user': userController.text,
+                        'activity': activityController.text,
+                        'dateTime': selectedDateTimeNotifier.value,
+                      } as Map<String, dynamic>);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -128,11 +104,15 @@ class AddActivityDialog extends StatelessWidget {
                       );
                     }
                   },
-                  child: const Text('Add', style: TextStyle(color: Colors.blueGrey)),
+                  child: const Text('Add',
+                      style: TextStyle(color: Colors.blueGrey)),
                 ),
                 ElevatedButton(
-                  onPressed: onCloseDialog,
-                  child: const Text('Cancel', style: TextStyle(color: Colors.blueGrey)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel',
+                      style: TextStyle(color: Colors.blueGrey)),
                 ),
               ],
             ),

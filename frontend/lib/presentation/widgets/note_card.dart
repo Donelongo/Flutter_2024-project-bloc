@@ -7,16 +7,12 @@ class NotesCard extends StatelessWidget {
     super.key,
     required this.note,
     required this.index,
-    required this.onNoteDeleted,
-    required this.onNoteEdited,
     required this.deleteNote,
     required this.onDataRecieved,
   });
 
   final Note note;
   final int index;
-  final Function(int) onNoteDeleted;
-  final Function(Note) onNoteEdited;
   final VoidCallback deleteNote;
   final Function(Map<String, String> data) onDataRecieved;
   @override
@@ -28,9 +24,6 @@ class NotesCard extends StatelessWidget {
             builder: (context) => NoteView(
               note: note,
               index: index,
-              onNoteDeleted: onNoteDeleted,
-              onNoteEdited: onNoteEdited,
-              Function: (int p1, String p2, String p3) {},
             ),
           ),
         );
@@ -58,7 +51,7 @@ class NotesCard extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    note.body,
+                    note.content,
                     style: const TextStyle(fontSize: 20),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

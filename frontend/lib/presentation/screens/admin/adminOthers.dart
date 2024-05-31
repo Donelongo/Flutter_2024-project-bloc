@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 class _Note {
   final String title;
   final String content;
@@ -56,14 +57,14 @@ class _AdminOthersPage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // Navigate to logspage
-                Navigator.pop(context);
+                context.pop(context);
               },
               icon: const Icon(Icons.history),
             ),
             IconButton(
               onPressed: () {
                 // Navigate to NotesPage
-                Navigator.pop(context);
+                context.pop(context);
               },
               icon: const Icon(Icons.notes),
             ),
@@ -158,7 +159,7 @@ class OthersNoteDetailsDialog extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                     child: const Text('Back'),
                   ),

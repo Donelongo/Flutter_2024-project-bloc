@@ -17,8 +17,15 @@ export class NotesService {
       createNoteDto.userId = userId;
 
       const createdNote = new this.noteModel(createNoteDto);
+
+      // still logging the note...
+      console.log(createNoteDto, userId, createdNote);
+
       console.log('Note created successfully');
-      return createdNote.save();
+      return createdNote.save().catch((error) => {
+        console.error('Error saving note:', error);
+        throw error;
+      });
     } catch (error) {
       console.error('Error creating note:', error);
       throw new Error('Unable to create note');

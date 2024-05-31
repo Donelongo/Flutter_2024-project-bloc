@@ -7,6 +7,7 @@ sealed class NotesState extends Equatable {
   List<Object> get props => [];
 }
 
+final class NoteCreated extends NotesState {}
 final class NotesInitial extends NotesState {}
 final class NotesLoading extends NotesState {}
 final class NotesLoaded extends NotesState {
